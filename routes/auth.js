@@ -59,7 +59,9 @@ router.post("/login", async (req, res) => {
   if (!validPassword)
     return res.status(400).send({ error: "Password is incorrect" });
 
-  const token = jwt.sign({ id: user._id }, process.env.SECRET_TOKEN);
+  const token = jwt.sign({ id: user._id }, process.env.SECRET_TOKEN, {
+    expiresIn: "2h",
+  });
   res.header("auth-token", token).send({ authToken: token });
 
   //return res.status(400).send("Logged in successfully");
