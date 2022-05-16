@@ -35,13 +35,17 @@ router.post("/register", async (req, res) => {
   });
   try {
     const savedUser = await user.save();
-    res.status(200).send(savedUser);
+    res.status(200).send({
+      status: "success",
+      message: "Signup successful",
+      data: savedUser,
+    });
   } catch (err) {
     res.status(400).send(err);
   }
 });
 
-/* Register user. */
+/* Login user. */
 router.post("/login", async (req, res) => {
   //Validate request
   const { error } = loginValidation(req.body);
@@ -62,7 +66,13 @@ router.post("/login", async (req, res) => {
   const token = jwt.sign({ id: user._id }, process.env.SECRET_TOKEN, {
     expiresIn: "2h",
   });
-  res.header("auth-token", token).send({ authToken: token });
+  //res.header("auth-token", token).send({ authToken: token });
+  res.header("auth-token", token).status(200).send({
+    status: "success",
+    message: "Signin successful",
+    data: user,
+    authToken: token,
+  });
 
   //return res.status(400).send("Logged in successfully");
 });
