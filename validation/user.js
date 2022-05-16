@@ -5,6 +5,7 @@ const registerValidation = (data) => {
   const schema = Joi.object({
     name: Joi.string().min(6).max(30).required(),
     email: Joi.string().min(6).required().email(),
+    dateOfBirth: Joi.date().required(),
     password: Joi.string()
       .min(8)
       .required()
@@ -33,6 +34,7 @@ const updationValidation = (data) => {
   const schema = Joi.object({
     name: Joi.string().min(6).max(30).required(),
     //email: Joi.string().min(6).required().email(),
+    dateOfBirth: Joi.date().required(),
     password: Joi.string()
       .min(8)
       .required()

@@ -18,6 +18,10 @@ const userSchema = new mongoose.Schema(
       unique: true,
       lowercase: true,
     },
+    birth_date: {
+      required: true,
+      type: Date,
+    },
     password: {
       type: String,
       max: 1024,

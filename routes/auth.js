@@ -16,7 +16,7 @@ router.post("/register", async (req, res) => {
   const { error } = registerValidation(req.body);
   if (error) return res.status(400).send({ error: error.details[0].message });
 
-  const { name, email, password } = req.body;
+  const { name, email, dateOfBirth, password } = req.body;
 
   //Check if user already exists
   const emailExist = await User.findOne({ email: email });
@@ -31,10 +31,12 @@ router.post("/register", async (req, res) => {
   const user = new User({
     name: name,
     email: email,
+    birth_date: dateOfBirth,
     password: hashedPassword,
   });
   try {
     const savedUser = await user.save();
+    console.log(dateOfBirth);
     res.status(200).send({
       status: "success",
       message: "Signup successful",

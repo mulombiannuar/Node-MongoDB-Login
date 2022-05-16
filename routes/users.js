@@ -25,7 +25,7 @@ router.put("/:id", async (req, res) => {
   const { error } = updationValidation(req.body);
   if (error) return res.status(400).send({ error: error.details[0].message });
 
-  const { name, password } = req.body;
+  const { name, password, dateOfBirth } = req.body;
   const id = req.params.id;
 
   //Hash password
@@ -35,6 +35,7 @@ router.put("/:id", async (req, res) => {
   //Updated user detials
   const data = {
     name: name,
+    birth_date: dateOfBirth,
     password: hashedPassword,
   };
   try {
