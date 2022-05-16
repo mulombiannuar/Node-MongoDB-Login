@@ -7,3 +7,6 @@ Authentication is the process of verifying a user’s identification through the
 
 ## Authorization
 Authorization is the process of allowing authenticated users access to resources by determining whether they have system access permissions. By giving or denying specific licenses to an authenticated user, authorization enables you to control access privileges.
+
+## What is JWT
+JSON Web Tokens (JWT) are an RFC 7519 open industry standard for representing claims between two parties. For example, you can use jwt.io to decode, verify, and produce JWT.
