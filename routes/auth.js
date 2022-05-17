@@ -58,7 +58,9 @@ router.post("/login", async (req, res) => {
   //Check if user already exists
   const user = await User.findOne({ email: email });
   if (!user)
-    return res.status(400).send({ error: "Email or password is incorrect" });
+    return res
+      .status(400)
+      .send({ status: "failed", error: "Email or password is incorrect" });
 
   //Valid password
   const validPassword = await compare(password, user.password);
