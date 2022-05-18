@@ -14,14 +14,19 @@ router.get("/", function (req, res, next) {
 router.post("/register", async (req, res) => {
   //Validate request
   const { error } = registerValidation(req.body);
-  if (error) return res.status(400).send({ error: error.details[0].message });
+  if (error)
+    return res
+      .status(400)
+      .send({ status: "failed", message: error.details[0].message });
 
   const { name, email, dateOfBirth, password } = req.body;
 
   //Check if user already exists
   const emailExist = await User.findOne({ email: email });
   if (emailExist)
-    return res.status(400).send({ error: "Email already exists" });
+    return res
+      .status(400)
+      .send({ status: "failed", message: "Email already exists" });
 
   //Hash password
   const salt = await genSaltSync(10);
@@ -51,7 +56,10 @@ router.post("/register", async (req, res) => {
 router.post("/login", async (req, res) => {
   //Validate request
   const { error } = loginValidation(req.body);
-  if (error) return res.status(400).send({ error: error.details[0].message });
+  if (error)
+    return res
+      .status(400)
+      .send({ status: "failed", message: error.details[0].message });
 
   const { email, password } = req.body;
 
@@ -60,12 +68,14 @@ router.post("/login", async (req, res) => {
   if (!user)
     return res
       .status(400)
-      .send({ status: "failed", error: "Email or password is incorrect" });
+      .send({ status: "failed", message: "Email or password is incorrect" });
 
   //Valid password
   const validPassword = await compare(password, user.password);
   if (!validPassword)
-    return res.status(400).send({ error: "Password is incorrect" });
+    return res
+      .status(400)
+      .send({ status: "failed", message: "Password is incorrect" });
 
   const token = jwt.sign({ id: user._id }, process.env.SECRET_TOKEN, {
     expiresIn: "2h",
